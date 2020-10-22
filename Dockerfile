@@ -4,8 +4,10 @@ RUN apt-get update && \
 	apt-get install -y apache2 libapache2-mod-svn subversion curl php libapache2-mod-php
 
 RUN curl -L https://github.com/mfreiholz/iF.SVNAdmin/archive/stable-1.6.2.tar.gz | tar xvz -C /opt/ && \
-	mv /opt/iF.SVNAdmin-stable-1.6.2 /opt/svnadmin &&\
-	ln -s /opt/svnadmin /var/www/html/svnadmin
+	mv /opt/iF.SVNAdmin-stable-1.6.2 /opt/svnadmin && \
+	rm -rf /var/www/html/* && \
+	ln -s /opt/svnadmin /var/www/html/svnadmin && \
+	a2enmod rewrite
 
 ADD rootfs /
 ADD https://raw.githubusercontent.com/docker-library/php/master/7.3/buster/apache/apache2-foreground /usr/local/bin/apache2-foreground
